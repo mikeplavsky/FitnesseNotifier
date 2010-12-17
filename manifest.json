@@ -1,0 +1,20 @@
+{
+  "name": "Fitnesse Controller",
+  "version": "0.1",
+  
+  "description": "Show Acceptance Tests State",
+  
+  "background_page": "background.html",
+  
+   "permissions": [
+    "http://*/*"
+  ],
+  
+  "content_scripts": [
+  {
+      "matches": ["http://*/*"],
+      "js": [ "lib/jquery-1.4.4.js","inspector.js"]
+  }
+  ]
+  
+}
