@@ -7,22 +7,22 @@ if ( $( 'link' ).filter( function() { return $(this).attr( 'href' ).match( 'fitn
 	
 	var href = path + '?test';
 	
-	if (path === "RecoveryManager.SuiteBuild.TestInProgress" ) {
-		return;
-	}	
+	if (path !== "RecoveryManager.SuiteBuild.TestInProgress" ) {
 	
-	var $testBtn = $( 'a[href="' + path + '?test"]' );	
-	$testBtn.text( 'Checking...' );
+		var $testBtn = $( 'a[href="' + path + '?test"]' );	
+		$testBtn.text( 'Checking...' );
+		
+		$.get( 'http://spb8112:8080/RecoveryManager.SuiteBuild.TestInProgress?test', function (res) {
+				
+				$testBtn.text( 'Test' );
+				
+				if ( res.match( RegExp( path, 'm' ) ) ) {				
+					$testBtn.hide();			
+				}			
+				
+		});
 	
-	$.get( 'http://spb8112:8080/RecoveryManager.SuiteBuild.TestInProgress?test', function (res) {
-			
-			$testBtn.text( 'Test' );
-			
-			if ( res.match( RegExp( path, 'm' ) ) ) {				
-				$testBtn.hide();			
-			}			
-			
-	});
+	}
 	
 };
 
