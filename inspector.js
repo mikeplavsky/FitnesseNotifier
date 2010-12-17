@@ -5,14 +5,22 @@ if ( $( 'link' ).filter( function() { return $(this).attr( 'href' ).match( 'fitn
 	var path = window.location.pathname.replace( /\//, '' );
 	console.log( path );
 	
-	var href = path + '?test';
+	var href = path + '?test';	
+	localStorage[ location.origin ] || (localStorage[ location.origin ] = "RecoveryManager.SuiteBuild.TestInProgress1");
 	
-	if (path !== "RecoveryManager.SuiteBuild.TestInProgress" ) {
+	var checker = localStorage[ location.origin ];
 	
-		var $testBtn = $( 'a[href="' + path + '?test"]' );	
+	if (path !== checker ) {
+	
+		var $testBtn = $( 'a[href="' + path + '?test"]' );
+		
+		$testBtn.ajaxError( function() {		
+			$testBtn.text( 'Error' );			
+		});
+	
 		$testBtn.text( 'Checking...' );
 		
-		$.get( 'http://spb8112:8080/RecoveryManager.SuiteBuild.TestInProgress?test', function (res) {
+		$.get( location.origin + '/' + checker + '?test', function (res) {
 				
 				$testBtn.text( 'Test' );
 				
