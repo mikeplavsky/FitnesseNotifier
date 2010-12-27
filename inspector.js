@@ -1,16 +1,8 @@
-if ( $( 'link' ).filter( function() { return $(this).attr( 'href' ).match( 'fitnesse' )  } ).length && !$( '#test-summary' ).length ) {
+function check_test(url) {
 
-	console.log( 'Started Fitnesse Controller' );
+	var path = window.location.pathname.replace( /\//, '' );	
 	
-	var path = window.location.pathname.replace( /\//, '' );
-	console.log( path );
-	
-	var href = path + '?test';	
-	localStorage[ location.origin ] || (localStorage[ location.origin ] = "FitNesse.TestsInProgress");
-	
-	var checker = localStorage[ location.origin ];
-	
-	if (path !== checker ) {
+	if ( window.location.href !==  url.match( /(.*)\?test$/ )[1] ) {
 	
 		var $testBtn = $( 'a[href="' + path + '?test"]' );
 		
@@ -20,7 +12,7 @@ if ( $( 'link' ).filter( function() { return $(this).attr( 'href' ).match( 'fitn
 	
 		$testBtn.text( 'Checking...' );
 		
-		$.get( location.origin + '/' + checker + '?test', function (res) {
+		$.get( url, function (res) {
 				
 				$testBtn.text( 'Test' );
 				
@@ -31,6 +23,15 @@ if ( $( 'link' ).filter( function() { return $(this).attr( 'href' ).match( 'fitn
 		});
 	
 	}
+	
+}
+
+
+if ( $( 'link' ).filter( function() { return $(this).attr( 'href' ).match( 'fitnesse' )  } ).length && !$( '#test-summary' ).length ) {
+
+	chrome.extension.sendRequest( { name: "getFitnesseSrv" }, function(res){		
+		check_test( res.fitnesseSrv );		
+	});
 	
 };
 

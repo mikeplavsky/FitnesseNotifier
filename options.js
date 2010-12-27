@@ -1,5 +1,5 @@
 function load() {
-	localStorage.fitnesseSrv = localStorage.fitnesseSrv || "spb8112";
+	localStorage.fitnesseSrv = localStorage.fitnesseSrv || "spb8112:8080";
 	localStorage.notificationTimeout = localStorage.notificationTimeout || "60";
 }
 
