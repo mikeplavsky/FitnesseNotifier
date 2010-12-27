@@ -1,0 +1,92 @@
+<html>
+<head>
+	<script src="lib/jquery-1.4.4.js"></script>  	
+</head>
+
+<title>Fitnesse Notifier - Options</title>
+
+<style type="text/css">
+
+body {
+  font-family:helvetica, arial, sans-serif;
+  font-size:80%;
+  margin:10px;
+}
+
+header {
+  padding-bottom:1.5em;
+  padding-top:2.5em;
+}
+
+#header h1 {
+  font-size: 156%;
+  display:inline;
+  padding-bottom:43px;
+  padding-left:75px;
+  padding-top:40px;
+  background:url(icon_128.png) no-repeat;
+  background-size:67px;
+  background-position:1px 40px;
+}
+
+.section-header {
+  background:#ebeff9;
+  border-top:1px solid #b5c7de;
+  font-size:99%;
+  padding:3px 0 2px 5px;
+  font-weight:bold;
+  margin-bottom:1em;
+  margin-top:4em;
+}
+
+.section-header.first {
+  margin-top:1em;
+}
+
+.indent {
+	padding-left: 25px;
+}
+
+#fitnesse-srv {
+  width:100px;
+  margin-left:2px;
+}
+
+#footer {
+  margin-top:4em;
+}
+
+
+</style>
+
+<body>
+
+<div id="header"><h1>Fitnesse Notifier Options</h1></div>
+
+<div class="section-header">Fitnesse Server</div>
+
+<p>
+  http://<input type="text" id="fitnesse-srv">
+    <em>/FitNesse.TestsInProgress</em>
+</p>
+
+<div class="section-header">Notifications</div>
+
+<div id="footer">
+  <button id="save-button" style="font-weight:bold" >Save</button>
+</div>
+
+
+<script src="options.js"></script>
+
+</body>
+
+
+
+
+
+
+
+
+
+

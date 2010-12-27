@@ -1,14 +1,22 @@
 {
   "name": "Fitnesse Controller",
-  "version": "0.2",
+  "version": "0.2.1",
   
   "description": "Show Acceptance Tests State",
   
   "background_page": "background.html",
   
    "permissions": [
+	"tabs",
     "http://*/*"
   ],
+  
+  "options_page": "options.html",
+  
+  "browser_action": {
+		"default_icon": "icon_16.png",
+		"default_title": "Fitnesse Notifier"
+	},
   
   "content_scripts": [
   {
