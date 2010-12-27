@@ -6,7 +6,7 @@ if ( $( 'link' ).filter( function() { return $(this).attr( 'href' ).match( 'fitn
 	console.log( path );
 	
 	var href = path + '?test';	
-	localStorage[ location.origin ] || (localStorage[ location.origin ] = "RecoveryManager.SuiteBuild.TestInProgress1");
+	localStorage[ location.origin ] || (localStorage[ location.origin ] = "FitNesse.TestsInProgress");
 	
 	var checker = localStorage[ location.origin ];
 	
