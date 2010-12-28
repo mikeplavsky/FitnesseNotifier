@@ -1,21 +1,8 @@
-The idea is very simple but powerful (kudos to Konstantin Vlasenko!):
+Fitnesse Notifier:
 
-Scenario:
+- shows number of running tests. 
+- disables Test button if Test is running
 
-You have tests which can't have several running instances. 
-You don't want any team member click Test button when test is running.
+This extension uses Konstantin Vlasenko's fork of Fitnesse http://vlasenko.org/2010/12/27/fitnesse-tests-in-progress-indication/. 
 
-But now it is possible with Fitnesse :(
-
-Let's fix it!
-
-Easy. 
-
-- First expose Fitnesse page which enumerates all running tests. Format is the same as you see in AddressBar: Product.Suite.BigTest
-- Define this page in localStorage for given origin Ctr+Shift+I/LocalStorage/Edit It'll be simplier in later versions! 
-
-Done.
-
-Now when you go to Test URL, this test will be checked against that 'enumurate running tests' page. If Test is being run, button Test will be hidden. 
-
-Enjoy :)
+Firstly you should go to Options and set right Fitnesse Server name.
