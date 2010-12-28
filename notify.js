@@ -1,22 +1,26 @@
-var text = "";
+function notify() {
 
-function addNames(arr) {
+	var res = location.href.match( /test=(.*)&started=(.*)&success=(.*)$/ );
 	
-	$(arr.split( ',' )).each( function (i,value) {
-		text += value.match( /\.([^\.]*)$/ )[1] + ' ';
-	});	
+	if ( res[2] == 'yes' ) {
+		$( '#fn-notify-test').addClass( 'fn-started' );
+	} 
+	else if ( res[3] == 'yes' ) {	
+		$( '#fn-notify-test').addClass( 'fn-success' );
+	}
+	else {	
+		$( '#fn-notify-test').addClass( 'fn-failure' );
+	}
+	
+	var text = res[1];
+	var parts = res[1].split( '.' );
+	
+	if ( parts.length > 2  ) {
+		text = parts.slice(parts.length - 2 ).join( '.' );
+	}
+	
+	$( '#fn-notify-test').text( text );	
+	
 };
 
-if (localStorage.startedTests) {
-	
-	text += "Started: "; 	
-	addNames(localStorage.startedTests);
-}
-
-if ( localStorage.doneTests ) {
-	
-	text += "Finished: ";	
-	addNames(localStorage.doneTests);
-}
-
-$( '#fn-notify-res' ).text( text );
+notify();

@@ -60,16 +60,23 @@ function get_tests() {
 
 function notify() {
 
-	if ( !localStorage.startedTests && !localStorage.doneTests ) {
-		return;
+	function show_notification (test, started, success) {
+	
+		var url = chrome.extension.getURL( 'notify.html' );
+	
+		var notification = webkitNotifications.createHTMLNotification( url + '?test=' + test + '&started=' + started + '&success=' + success );	
+		notification.show();	
+		setTimeout( function () { notification.cancel(); }, 60 * 1000 );
+		
 	}
-
-	var url = chrome.extension.getURL( 'notify.html' );
-	var notification = webkitNotifications.createHTMLNotification( url );
 	
-	notification.show();
+	$.each ( localStorage.startedTests.split(','), function (i,v) {
+		v && show_notification( v, 'yes', 'yes' );
+	});	
 	
-	setTimeout( function () { notification.cancel(); }, 60 * 1000 );
+	$.each ( localStorage.doneTests.split(','), function (i,v) {
+		v && show_notification( v, 'no', 'yes' );
+	});	
 }
 
 get_tests();
@@ -77,8 +84,9 @@ get_tests();
 localStorage.fitnesseSrv = localStorage.fitnesseSrv || "spb8112:8080";
 window.setInterval(get_tests, 20 * 1000 );
 
-function getTestsUrl() {	
-	return 'http://' + localStorage.fitnesseSrv + '/FitNesse.TestsInProgress?test';
+function getTestsUrl() {
+	localStorage.TestsInProgressPath = localStorage.TestsInProgressPath || '/FitNesse.TestsInProgress?test';
+	return 'http://' + localStorage.fitnesseSrv + localStorage.TestsInProgressPath;	
 }
 
 function isTestsUrl(url) {

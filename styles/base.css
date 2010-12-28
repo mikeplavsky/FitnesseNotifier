@@ -1,0 +1,14 @@
+#fn-notify-test {	
+}
+
+#fn-notify-test.fn-started {
+	background: white;
+}
+
+#fn-notify-test.fn-success {	
+	color: green;	
+}
+
+#fn-notify-test.fn-failure {
+	color: red;	
+}
