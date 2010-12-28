@@ -18,6 +18,8 @@ function get_tests() {
 
 }
 
+get_tests();
+
 localStorage.fitnesseSrv = localStorage.fitnesseSrv || "spb8112:8080";
 window.setInterval(get_tests, 20 * 1000 );
 
@@ -44,7 +46,10 @@ function goToTestsPage() {
 }
 
 chrome.browserAction.onClicked.addListener(function(tab) {
+  
+  get_tests();	
   goToTestsPage();
+  
 });
 
 chrome.extension.onRequest.addListener( function (request, sender, sendResponse) {     
