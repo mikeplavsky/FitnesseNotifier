@@ -1,8 +1,48 @@
+function analyze($trs) {
+
+	localStorage.runningTests = localStorage.runningTests || '';
+	
+	var saved = localStorage.runningTests.split( ',' );
+
+	var running = [];
+	var started = [];
+	var done = [];
+	
+	$trs.each( function () { 
+		
+		var testName = $(this).text().match( /\[(.*)\] surplus/ )[1];
+        
+		if ( saved.indexOf( testName ) == -1 ) {	
+			started.push( testName );
+		}
+		
+		running.push( testName ); 
+		
+	});
+	
+	$.each( saved, function (idx, value) {
+		
+		if (running.indexOf( value ) == -1 && value !== "" ) {
+			done.push( value );
+		}
+		
+	});
+	
+	localStorage.startedTests = started;
+	localStorage.doneTests = done;
+	localStorage.runningTests = running.join(',');
+}
+
 function get_tests() {
 
 	$.get( getTestsUrl(), function (res) {
 	
-		var num = $( res ).find( 'td:contains("Query:TestsInProgress")' ).parent().parent().find( 'tr' ).length - 2;
+		var $trs = $( res ).find( 'td:contains("Query:TestsInProgress")' ).parent().parent().find( 'tr:gt(1)' );		
+		
+		analyze( $trs );
+		notify();
+		
+		var num = $trs.length;
 		
 		if (num > 0) {
 			
@@ -16,6 +56,20 @@ function get_tests() {
 				
 	});
 
+}
+
+function notify() {
+
+	if ( !localStorage.startedTests && !localStorage.doneTests ) {
+		return;
+	}
+
+	var url = chrome.extension.getURL( 'notify.html' );
+	var notification = webkitNotifications.createHTMLNotification( url );
+	
+	notification.show();
+	
+	setTimeout( function () { notification.cancel(); }, 60 * 1000 );
 }
 
 get_tests();
