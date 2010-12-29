@@ -66,7 +66,7 @@ function notify() {
 	
 		var notification = webkitNotifications.createHTMLNotification( url + '?test=' + test + '&started=' + started + '&success=' + success );	
 		notification.show();	
-		setTimeout( function () { notification.cancel(); }, 60 * 1000 );
+		setTimeout( function () { notification.cancel(); }, 15 * 1000 );
 		
 	}
 	
@@ -75,7 +75,17 @@ function notify() {
 	});	
 	
 	$.each ( localStorage.doneTests.split(','), function (i,v) {
-		v && show_notification( v, 'no', 'yes' );
+	
+		if (!v) return;
+	
+		$.get( 'http://' + localStorage.fitnesseSrv + '/' + v + '?testHistory', function (res) {
+		
+			var $td = $( res ).find( 'td:contains("' + v + '")' ).parent().find( 'td:eq(4)' );
+			var res = $td.attr( 'class' ) == 'pass'? 'yes' : 'no';
+			
+			show_notification( v, 'no', res );		
+		});	
+		
 	});	
 }
 
