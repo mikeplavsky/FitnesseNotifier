@@ -1,14 +1,38 @@
-#fn-notify-test {	
+#fn-notify {
+	
+	position: fixed;
+	right:0;
+	top:0;
+	
+	width: 97%;
+	height: 100%;
+	
+	margin-top: 3px;
+	margin-right: 3px;
+	
+	overflow:hidden;
+	
 }
 
-#fn-notify-test.fn-started {
+#fn-notify-test {	
+
+	position:absolute;
+	
+	right:0;
+	top:0;
+	
+	font-size: 90%;
+	font-family: arial, sans-serif;
+}
+
+.fn-started {
 	background: white;
 }
 
-#fn-notify-test.fn-success {	
+.fn-success {	
 	color: green;	
 }
 
-#fn-notify-test.fn-failure {
+.fn-failure {
 	color: red;	
 }

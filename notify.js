@@ -12,14 +12,7 @@ function notify() {
 		$( '#fn-notify-test').addClass( 'fn-failure' );
 	}
 	
-	var text = res[1];
-	var parts = res[1].split( '.' );
-	
-	if ( parts.length > 2  ) {
-		text = parts.slice(parts.length - 2 ).join( '.' );
-	}
-	
-	$( '#fn-notify-test').text( text );	
+	$( '#fn-notify-test').text( res[1] );	
 	
 };
 
