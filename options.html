@@ -52,10 +52,18 @@ header {
   margin-left:2px;
 }
 
+#notification-timeout {
+  width:50px;
+}
+
 #footer {
   margin-top:4em;
 }
 
+#saved {
+	display: none;
+	background-color: #FDFFBD;
+}
 
 </style>
 
@@ -72,10 +80,20 @@ header {
 
 <div class="section-header">Notifications</div>
 
-<div id="footer">
-  <button id="save-button" style="font-weight:bold" >Save</button>
+<p>
+  	<input type="checkbox" id="message-notifications"> Enable new messages notifications.  
+</p>
+
+<div class="indent">
+  Notification timeout <input type="text" id="notification-timeout"> seconds.
 </div>
 
+
+
+<div id="footer">
+  <button id="save-button" style="font-weight:bold" >Save</button>
+  <span id="saved">New settings has been saved!</span>
+</div>
 
 <script src="options.js"></script>
 

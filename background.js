@@ -60,13 +60,19 @@ function get_tests() {
 
 function notify() {
 
+	if (localStorage.enableNotification != 'yes' ) {
+		return; 
+	}
+
 	function show_notification (test, started, success) {
 	
 		var url = chrome.extension.getURL( 'notify.html' );
 	
 		var notification = webkitNotifications.createHTMLNotification( url + '?test=' + test + '&started=' + started + '&success=' + success );	
 		notification.show();	
-		setTimeout( function () { notification.cancel(); }, 15 * 1000 );
+		
+		var secs = parseInt( localStorage.notificationTimeout, 10 ); 		
+		setTimeout( function () { notification.cancel(); }, secs * 1000 );
 		
 	}
 	
