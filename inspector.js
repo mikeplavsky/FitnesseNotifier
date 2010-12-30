@@ -30,7 +30,9 @@ function check_test(url) {
 if ( $( 'link' ).filter( function() { return $(this).attr( 'href' ).match( 'fitnesse' )  } ).length && !$( '#test-summary' ).length ) {
 
 	chrome.extension.sendRequest( { name: "getFitnesseSrv" }, function(res){		
-		check_test( res.fitnesseSrv );		
+		if (res.enableTestCheck == 'yes') { 
+            check_test( res.fitnesseSrv );		
+        }
 	});
 	
 };

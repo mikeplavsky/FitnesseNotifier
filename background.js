@@ -60,6 +60,8 @@ function get_tests() {
 
 function notify() {
 
+	localStorage.enableNotification = localStorage.enableNotification || 'yes';
+
 	if (localStorage.enableNotification != 'yes' ) {
 		return; 
 	}
@@ -70,6 +72,8 @@ function notify() {
 	
 		var notification = webkitNotifications.createHTMLNotification( url + '?test=' + test + '&started=' + started + '&success=' + success );	
 		notification.show();	
+		
+		localStorage.notificationTimeout = localStorage.notificationTimeout || 15;
 		
 		var secs = parseInt( localStorage.notificationTimeout, 10 ); 		
 		setTimeout( function () { notification.cancel(); }, secs * 1000 );
@@ -130,8 +134,24 @@ chrome.browserAction.onClicked.addListener(function(tab) {
   
 });
 
-chrome.extension.onRequest.addListener( function (request, sender, sendResponse) {     
-    sendResponse({ fitnesseSrv: getTestsUrl() });    
+chrome.extension.onRequest.addListener( function (request, sender, sendResponse) {  
+
+    localStorage.enableTestCheck = localStorage.enableTestCheck || 'yes';   
+    sendResponse({ fitnesseSrv: getTestsUrl(), enableTestCheck :  localStorage.enableTestCheck});    
+});
+
+$( "#fn-result" ).bind( 'testsNumber', function ( res ) {
+
+    if (num > 0) {
+			
+		chrome.browserAction.setBadgeBackgroundColor( {color: [0,255,0,100] } );
+		chrome.browserAction.setBadgeText( {text: num.toString() } );
+			
+    }
+	else {
+        chrome.browserAction.setBadgeText( {text: '' } );
+    }
+    
 });
 
 
