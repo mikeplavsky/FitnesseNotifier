@@ -13,17 +13,7 @@ function getTests() {
         }
 
         function show_notification (test, started, success) {
-        
-            var url = chrome.extension.getURL( 'notify.html' );
-        
-            var notification = webkitNotifications.createHTMLNotification( url + '?test=' + test + '&started=' + started + '&success=' + success );	
-            notification.show();	
-            
-            localStorage.notificationTimeout = localStorage.notificationTimeout || 15;
-            
-            var secs = parseInt( localStorage.notificationTimeout, 10 ); 		
-            setTimeout( function () { notification.cancel(); }, secs * 1000 );
-            
+            $( '#fn-result' ).trigger( 'showNotification', { test: test, started: started, success: success } );
         }
         
         $.each ( localStorage.startedTests.split(','), function (i,v) {
