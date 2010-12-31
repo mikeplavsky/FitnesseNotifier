@@ -1,35 +1,28 @@
 function check_test(url) {
 
-	var path = window.location.pathname.replace( /\//, '' );	
-	
-	if ( window.location.href !==  url.match( /(.*)\?test$/ )[1] ) {
-	
-		var $testBtn = $( 'a[href="' + path + '?test"]' );
+	var path = window.location.pathname.replace( /\//, '' );
+	var $testBtn = $( 'a[href="' + path + '?test"]' );
 		
-		$testBtn.ajaxError( function() {		
-			$testBtn.text( 'Error' );			
-		});
+	$testBtn.ajaxError( function() {		
+		$testBtn.text( 'Error' );			
+	});
 	
-		$testBtn.text( 'Checking...' );
-		
-		$.get( url, function (res) {
+	$.get( url, function (res) {
 				
-				$testBtn.text( 'Test' );
+			$testBtn.text( 'Test' );
 				
-				if ( res.match( RegExp( path, 'm' ) ) ) {				
-					$testBtn.hide();			
-				}			
+			if ( res.match( RegExp( path, 'm' ) ) ) {				
+				$testBtn.hide();			
+			}			
 				
-		});
-	
-	}
+	});
 	
 }
 
 
 if ( $( 'link' ).filter( function() { return $(this).attr( 'href' ).match( 'fitnesse' )  } ).length && !$( '#test-summary' ).length ) {
 
-	chrome.extension.sendRequest( { name: "getFitnesseSrv" }, function(res){		
+	chrome.extension.sendRequest( { name: "getFitnesseSrv" }, function(res){
 		if (res.enableTestCheck == 'yes') { 
             check_test( res.fitnesseSrv );		
         }
