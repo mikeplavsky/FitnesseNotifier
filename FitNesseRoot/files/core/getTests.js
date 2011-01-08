@@ -44,8 +44,8 @@ function getTests() {
         var running = [];
         var started = [];
         var done = [];
-        
-        $trs.each( function () { 
+
+		$trs.each( function () { 
             
             var testName = $(this).find('td:eq(0)').text().trim();
             
@@ -77,9 +77,8 @@ function getTests() {
 		
 		analyze( $trs );
 		notify();
-		
-		var num = $trs.length;        
-        $( "#fn-result" ).trigger( 'testsNumber', {number: num } );		
+
+        $( "#fn-result" ).trigger( 'testsNumber', {number: $trs.length } );		
 				
 	});
 

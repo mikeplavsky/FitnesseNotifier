@@ -1,5 +1,5 @@
-function stopAllTests() {
-    $.getJSON( 'http://localhost:8181/stopAllTests?callback=?');    
+function stopAllTests(callback) {
+    $.getJSON( 'http://localhost:8181/stopAllTests?callback=?', callback);    
 }
 
 function stopTests(names, callback) {
@@ -13,8 +13,6 @@ function startTests(names, callback) {
 module( 'fitnesse notifier', {	
    
    setup: function () {   
-        
-        stopAllTests(); 
         
         localStorage.fitnesseSrv = 'localhost:8080'
         
@@ -39,22 +37,27 @@ test( 'running tests', function () {
     expect(4);
     
     var tests = ['DisasterRecovery.SuiteMoss2007', 'SuiteFarmBackup.TestBackup',
-                  'DisasterRecovery.SuiteSp14','SuiteFarmBackup.TestSchedule'];
+                  'DisasterRecovery.SuiteSp14','SuiteFarmBackup.TestSchedule'].sort();
                   
     $( '#fn-result' ).bind( 'testsNumber', function (ev, res) {
-            
+	
+		var running = localStorage.runningTests.split( ',' ).sort();
+        var started = localStorage.startedTests.split( ',' ).sort();
+    
         same( res.number, 4, 'notification about number of running tests' );
-        same( localStorage.runningTests.split( ',' ).length, 4, 'number of running tests in LS' );
-        same( localStorage.startedTests.split( ',' ).length, 4, 'number of started tests in LS' );
+		same( running, tests, 'running tests' )
+        same( started, tests, 'started tests' );
         same( localStorage.doneTests, '', 'number of done tests in LS' );
              
         start();
         
     });
     
-    startTests( tests.join(';'), function (res) {     
-        getTests();           
-    });
+	stopAllTests( function () {
+    	startTests( tests.join(';'), function (res) {     
+        	getTests();           
+    	});
+	});
     
 });
 
@@ -83,10 +86,12 @@ test( 'done tests', function () {
             
     });
     
-    startTests( tests.join(';'), function (res) {         
-        getTests();           
+	stopAllTests( function () {
+    	startTests( tests.join(';'), function (res) {         
+        	getTests();           
+    	});
     });
-    
+
 });
 
 test( 'started tests', function () {
@@ -99,7 +104,7 @@ test( 'started tests', function () {
                   
     $( '#fn-result' ).bind( 'testsNumber', function (ev, res) {
     
-        var new_tests = [ 'InformationPortal.MainSuite.Sp2k', 'InformationPortal.MainSuite.Sp2kTen' ]; 
+        var new_tests = [ 'InformationPortal.MainSuite.Sp2k', 'InformationPortal.MainSuite.Sp2kTen' ].sort(); 
                
         if ( res.number == 4 ) {
 
@@ -111,14 +116,16 @@ test( 'started tests', function () {
         }
                 
         same( res.number, 6, 'notification about number of running tests' );        
-        same( localStorage.startedTests, new_tests.join(','), 'number of started tests' );    
+        same( localStorage.startedTests.split(',').sort(), new_tests, 'number of started tests' );    
         start(); 
                
-    });              
+    });
 
-    startTests( tests.join(';'), function (res) {
-        getTests();
-    });                        
+	stopAllTests( function () {
+    	startTests( tests.join(';'), function (res) {
+        	getTests();
+    	});
+	});                        
 
 });
 
