@@ -31,10 +31,26 @@ module( 'fitnesse notifier', {
 
 function _test() {}
 
+function sexpect(num) {
+	
+	stop();
+	expect(num);
+	
+}
+
+function run(tests) {
+	
+	stopAllTests( function () {
+    	startTests( tests.join(';'), function (res) {     
+        	getTests();           
+    	});
+	});
+	
+}
+
 test( 'running tests', function () {
 
-    stop();
-    expect(4);
+    sexpect(4);
     
     var tests = ['DisasterRecovery.SuiteMoss2007', 'SuiteFarmBackup.TestBackup',
                   'DisasterRecovery.SuiteSp14','SuiteFarmBackup.TestSchedule'].sort();
@@ -53,18 +69,13 @@ test( 'running tests', function () {
         
     });
     
-	stopAllTests( function () {
-    	startTests( tests.join(';'), function (res) {     
-        	getTests();           
-    	});
-	});
+	run(tests);
     
 });
 
 test( 'done tests', function () {
 
-    stop();
-    expect(2);
+    sexpect(2);
     
     var tests = ['DisasterRecovery.SuiteMoss2007', 'SuiteFarmBackup.TestBackup',
                   'DisasterRecovery.SuiteSp14','SuiteFarmBackup.TestSchedule'];
@@ -86,18 +97,13 @@ test( 'done tests', function () {
             
     });
     
-	stopAllTests( function () {
-    	startTests( tests.join(';'), function (res) {         
-        	getTests();           
-    	});
-    });
+	run(tests);
 
 });
 
 test( 'started tests', function () {
 
-    stop();
-    expect(2);
+    sexpect(2);
 
     var tests = ['DisasterRecovery.SuiteMoss2007', 'SuiteFarmBackup.TestBackup',
                   'DisasterRecovery.SuiteSp14','SuiteFarmBackup.TestSchedule'];
@@ -121,11 +127,7 @@ test( 'started tests', function () {
                
     });
 
-	stopAllTests( function () {
-    	startTests( tests.join(';'), function (res) {
-        	getTests();
-    	});
-	});                        
+	run(tests);
 
 });
 
