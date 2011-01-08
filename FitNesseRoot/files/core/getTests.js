@@ -28,8 +28,8 @@ function getTests() {
             
                 var $td = $( res ).find( 'td:contains("' + v + '")' ).parent().find( 'td:eq(4)' );
                 var res = $td.attr( 'class' ) == 'pass'? 'yes' : 'no';
-                
-                show_notification( v, 'no', res );		
+
+			    show_notification( v, 'no', res );		
             });	
             
         });	

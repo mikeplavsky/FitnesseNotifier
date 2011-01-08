@@ -2,6 +2,7 @@
 *.zip
 *.swp
 *.log
+*.tmproj
 
 FitNesseRoot/FitNesse/
 FitNesseRoot/FrontPage/

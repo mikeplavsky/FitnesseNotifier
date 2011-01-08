@@ -38,7 +38,10 @@ function sexpect(num) {
 	
 }
 
-function run(tests) {
+var tests = ['DisasterRecovery.SuiteMoss2007', 'SuiteFarmBackup.TestBackup',
+              'DisasterRecovery.SuiteSp14','SuiteFarmBackup.TestSchedule'].sort();
+
+function run() {
 	
 	stopAllTests( function () {
     	startTests( tests.join(';'), function (res) {     
@@ -50,11 +53,14 @@ function run(tests) {
 
 test( 'running tests', function () {
 
-    sexpect(4);
+    sexpect(8);
+	var num = 0;
+	
+	$( '#fn-result' ).bind( 'showNotification', function(ev,res) {
+		same(res.test, tests[num], 'started test notification');
+		num += 1;
+	});
     
-    var tests = ['DisasterRecovery.SuiteMoss2007', 'SuiteFarmBackup.TestBackup',
-                  'DisasterRecovery.SuiteSp14','SuiteFarmBackup.TestSchedule'].sort();
-                  
     $( '#fn-result' ).bind( 'testsNumber', function (ev, res) {
 	
 		var running = localStorage.runningTests.split( ',' ).sort();
@@ -68,19 +74,16 @@ test( 'running tests', function () {
         start();
         
     });
-    
-	run(tests);
+
+	run();
     
 });
 
 test( 'done tests', function () {
 
     sexpect(2);
-    
-    var tests = ['DisasterRecovery.SuiteMoss2007', 'SuiteFarmBackup.TestBackup',
-                  'DisasterRecovery.SuiteSp14','SuiteFarmBackup.TestSchedule'];
-                  
-    $( '#fn-result' ).bind( 'testsNumber', function (ev, res) {  
+
+	$( '#fn-result' ).bind( 'testsNumber', function (ev, res) {  
              
        if (res.number == 4) {
             
@@ -92,12 +95,11 @@ test( 'done tests', function () {
              
        same( res.number, 2, 'notification about number of running tests' );
        same( localStorage.doneTests, [tests[0],tests[2]].join( ',' ), 'number of done tests in LS' );
-             
-       start();
+	   start();
             
     });
     
-	run(tests);
+	run();
 
 });
 
@@ -105,9 +107,6 @@ test( 'started tests', function () {
 
     sexpect(2);
 
-    var tests = ['DisasterRecovery.SuiteMoss2007', 'SuiteFarmBackup.TestBackup',
-                  'DisasterRecovery.SuiteSp14','SuiteFarmBackup.TestSchedule'];
-                  
     $( '#fn-result' ).bind( 'testsNumber', function (ev, res) {
     
         var new_tests = [ 'InformationPortal.MainSuite.Sp2k', 'InformationPortal.MainSuite.Sp2kTen' ].sort(); 
@@ -127,7 +126,7 @@ test( 'started tests', function () {
                
     });
 
-	run(tests);
+	run();
 
 });
 
