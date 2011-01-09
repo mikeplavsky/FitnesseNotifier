@@ -10,6 +10,14 @@ function startTests(names, callback) {
     $.getJSON( 'http://localhost:8181/startTests?callback=?', {tests:names}, callback );
 }
 
+function greenTest(name,callback) {
+	$.getJSON('http://localhost:8181/greenTest?callback=?', {test:name}, callback );
+}
+
+function redTest(name,callback) {
+	$.getJSON('http://localhost:8181/redTest?callback=?', {test:name}, callback );
+}
+
 module( 'fitnesse notifier', {	
    
    setup: function () {   
@@ -41,7 +49,7 @@ function sexpect(num) {
 var tests = ['DisasterRecovery.SuiteMoss2007', 'SuiteFarmBackup.TestBackup',
               'DisasterRecovery.SuiteSp14','SuiteFarmBackup.TestSchedule'].sort();
 
-function run() {
+function runTests(tests){
 	
 	stopAllTests( function () {
     	startTests( tests.join(';'), function (res) {     
@@ -49,6 +57,10 @@ function run() {
     	});
 	});
 	
+}
+
+function run() {
+	runTests(tests);
 }
 
 test( 'running tests', function () {
@@ -155,7 +167,8 @@ test( 'started tests', function () {
         }
                 
         same( res.number, 6, 'notification about number of running tests' );        
-        same( localStorage.startedTests.split(',').sort(), new_tests, 'number of started tests' );    
+        same( localStorage.startedTests.split(',').sort(), new_tests, 'number of started tests' );  
+  
         start(); 
                
     });
@@ -164,18 +177,48 @@ test( 'started tests', function () {
 
 });
 
+function checkDoneTest(colorFunc, success) {
+	
+	var test = tests[0];
+	
+	stop();
+	
+	$( '#fn-result' ).bind( 'testsNumber', function(ev,res) {
+			
+			if (res.number == 3 ) {return;}
+			
+			stopTests( test, function (res) {
+				
+				colorFunc( test, function (res) {
+				
+					$( '#fn-result' ).bind( 'showNotification', function (ev, res) {  
+					
+						same(res.started, 'no', 'test has been finished' );
+						same(res.success, success, 'done result' );
+						same(res.test, test, 'test name');
+					
+						start();
+					});
+					
+					getTests();
+					
+				});
+				
+			});
+			
+	});
+	
+	run()
+		
+}
 
+test( 'green test done', function () {
+	checkDoneTest(greenTest, 'yes');
+});
 
-
-
-
-
-
-
-
-
-
-
+test( 'red test done', function () {
+	checkDoneTest(redTest,'no');
+});
 
 
 
