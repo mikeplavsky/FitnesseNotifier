@@ -103,6 +103,40 @@ test( 'done tests', function () {
 
 });
 
+test( 'notification of done tests', function () {
+
+    sexpect(3);
+
+	$( '#fn-result' ).bind( 'testsNumber', function (ev, res) {  
+             
+       if (res.number == 4) {
+            
+           stopTests( [tests[0],tests[2]].join(';'), function (res) {
+				
+				var done = [];
+				
+				$( '#fn-result' ).bind( 'showNotification', function (ev, res) {  
+					
+					same( res.started, 'no', 'sign that test has been done' );
+					done.push(res.test);
+					
+					if (done.length == 2) {
+						same( done.sort(), [tests[0],tests[2]], 'done tests');
+						start();
+					}
+				});
+			
+                getTests();                                    
+           });
+
+           return;                
+       }    
+    });
+    
+	run();
+
+});
+
 test( 'started tests', function () {
 
     sexpect(2);
