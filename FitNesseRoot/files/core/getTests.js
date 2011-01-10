@@ -1,4 +1,17 @@
-﻿function getTestsUrl() {
+﻿function checkTest(pathname,url) {
+
+	$.get( url, function (res) {
+		
+		var path = pathname.replace( /^\//, '' );
+		var $testButton = $( 'a[href="' + path + '?test"]' );
+		
+		$( '#fn-checkTest' ).trigger('testState', {running: res.match( RegExp( path, 'm' ) ), testButton: $testButton } )
+		
+	});
+	
+}
+
+function getTestsUrl() {
 	return 'http://' + localStorage.fitnesseSrv + '/files/testProgress';
 }
 

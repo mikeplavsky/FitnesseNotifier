@@ -22,7 +22,7 @@
   "content_scripts": [
   {
       "matches": ["http://*/*"],
-      "js": [ "lib/jquery-1.4.4.js","inspector.js"]
+      "js": [ "lib/jquery-1.4.4.js", "FitNesseRoot/files/core/getTests.js", "inspector.js"]
   }
   ]
   

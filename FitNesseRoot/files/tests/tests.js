@@ -33,6 +33,9 @@ module( 'fitnesse notifier', {
         $( '#fn-result' ).remove();
         $( 'body' ).append( '<div id="fn-result">' );
         
+		$( '#fn-checkTest' ).remove();
+		$( 'body' ).append( '<div id="fn-checkTest">' );
+		
    }
     
 });
@@ -218,6 +221,29 @@ test( 'green test done', function () {
 
 test( 'red test done', function () {
 	checkDoneTest(redTest,'no');
+});
+
+test('Running test', function(){
+	
+	var btn = $( '<a href="' + tests[0] + '?test">Test</a>' );
+	$('#fn-checkTest').append( btn );
+	 
+	stop();
+
+	$( '#fn-checkTest' ).bind( 'testState', function(ev,res) {
+		
+		same( res.running, [tests[0]], 'test is not running');
+		same( res.testButton.text(), 'Test', 'test button');
+		
+		start();
+	});
+	
+	stopAllTests( function(){
+		startTests(tests[0], function() {
+			checkTest( '/' + tests[0], 'http://localhost:8080/files/testProgress' );
+		});
+	});
+	
 });
 
 
