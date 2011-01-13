@@ -31,7 +31,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 chrome.extension.onRequest.addListener( function (request, sender, sendResponse) {  
 
     localStorage.enableTestCheck = localStorage.enableTestCheck || 'yes';   
-    sendResponse({ fitnesseSrv: getTestsUrl(), enableTestCheck :  localStorage.enableTestCheck});    
+    sendResponse({ fitnesseSrv: getTestsUrl(), fitnesseSrvName: localStorage.fitnesseSrv, enableTestCheck :  localStorage.enableTestCheck});    
 });
 
 $( "#fn-result" ).bind( 'testsNumber', function ( ev, res ) {

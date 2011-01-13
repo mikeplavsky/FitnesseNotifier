@@ -2,7 +2,7 @@ if ( $( 'link' ).filter( function() { return $(this).attr( 'href' ).match( 'fitn
 
 	chrome.extension.sendRequest( { name: "getFitnesseSrv" }, function(res){
 	
-		if (res.enableTestCheck == 'yes') { 
+		if (res.enableTestCheck == 'yes' && res.fitnesseSrvName == window.location.host ) { 
 			
 			$('body').append('<div id="fn-checkTest">');
 			

@@ -1,28 +1,32 @@
+function getURL(path) {
+    return 'http://' + window.location.hostname + path;
+}
+
 function stopAllTests(callback) {
-    $.getJSON( 'http://localhost:8181/stopAllTests?callback=?', callback);    
+    $.getJSON(getURL(':8181/stopAllTests?callback=?'), callback);    
 }
 
 function stopTests(names, callback) {
-    $.getJSON( 'http://localhost:8181/stopTests?callback=?', {tests:names}, callback );    
+    $.getJSON(getURL(':8181/stopTests?callback=?'), {tests:names}, callback );    
 }
 
 function startTests(names, callback) {    
-    $.getJSON( 'http://localhost:8181/startTests?callback=?', {tests:names}, callback );
+    $.getJSON(getURL(':8181/startTests?callback=?'), {tests:names}, callback );
 }
 
 function greenTest(name,callback) {
-	$.getJSON('http://localhost:8181/greenTest?callback=?', {test:name}, callback );
+	$.getJSON(getURL(':8181/greenTest?callback=?'), {test:name}, callback );
 }
 
 function redTest(name,callback) {
-	$.getJSON('http://localhost:8181/redTest?callback=?', {test:name}, callback );
+	$.getJSON(getURL(':8181/redTest?callback=?'), {test:name}, callback );
 }
 
 module( 'fitnesse notifier', {	
    
    setup: function () {   
         
-        localStorage.fitnesseSrv = 'localhost:8080'
+        localStorage.fitnesseSrv = window.location.hostname + ':8080';
         
         localStorage.runningTests = '';
         localStorage.startedTests = '';
@@ -240,7 +244,7 @@ test('Running test', function(){
 	
 	stopAllTests( function(){
 		startTests(tests[0], function() {
-			checkTest( '/' + tests[0], 'http://localhost:8080/files/testProgress' );
+			checkTest( '/' + tests[0], getURL(':8080/files/testProgress') );
 		});
 	});
 	
