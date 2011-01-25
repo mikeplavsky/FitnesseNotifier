@@ -3,8 +3,12 @@ if ( $( 'link' ).filter( function() { return $(this).attr( 'href' ).match( 'fitn
 	chrome.extension.sendRequest( { name: "getFitnesseSrv" }, function(res){
 	
 		if (res.enableTestCheck == 'yes' && res.fitnesseSrvName == window.location.host ) { 
-			
-			$('body').append('<div id="fn-checkTest">');
+        
+            function check() {
+                checkTest( window.location.pathname, res.fitnesseSrv );
+            }
+        
+            $('body').append('<div id="fn-checkTest">');
 			
 			$('#fn-checkTest').bind('testState', function(ev,res){
 
@@ -15,16 +19,14 @@ if ( $( 'link' ).filter( function() { return $(this).attr( 'href' ).match( 'fitn
 				else {
 					$("#fn-test-running").hide();
 					res.testButton.show();
-				}
-				
+				}                
+                
+                setTimeout( check, 5000 );
+                
 			});
 
-			$('body').append('<div id="fn-test-running" style="display:none">Test is running</div>');
-			var checker = function() {checkTest( window.location.pathname, res.fitnesseSrv ); }
-			checker();
-			
-            setInterval( checker, 5 * 1000 );		
-
+			$('body').append('<div id="fn-test-running" style="display:none">Test is running</div>');            
+			check();
         }
 	});
 };

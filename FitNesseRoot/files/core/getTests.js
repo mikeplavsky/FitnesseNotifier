@@ -4,8 +4,9 @@
 		
 		var path = pathname.replace( /^\//, '' );
 		var $testButton = $( 'a[href="' + path + '?test"]' );
-		
-		$( '#fn-checkTest' ).trigger('testState', {running: res.match( RegExp( path, 'm' ) ), testButton: $testButton } )
+        
+        var running = res.match( RegExp( path, 'm' ) ) != null;		
+		$( '#fn-checkTest' ).trigger('testState', {running: running, testButton: $testButton } )
 		
 	});
 	
