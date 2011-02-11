@@ -235,8 +235,10 @@ test('Running test', function(){
 	stop();
 
 	$( '#fn-checkTest' ).bind( 'testState', function(ev,res) {
+    
+        console.log( res );
 		
-		same( res.running, [tests[0]], 'test is not running');
+		same( res.running, true, 'test is running');
 		same( res.testButton.text(), 'Test', 'test button');
 		
 		start();
