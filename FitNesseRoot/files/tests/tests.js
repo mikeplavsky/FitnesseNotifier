@@ -227,18 +227,17 @@ test( 'red test done', function () {
 	checkDoneTest(redTest,'no');
 });
 
-test('Running test', function(){
-	
-	var btn = $( '<a href="' + tests[0] + '?test">Test</a>' );
+
+function runningTest(name,running) {
+
+    var btn = $( '<a href="' + name + '?test">Test</a>' );
 	$('#fn-checkTest').append( btn );
 	 
 	stop();
 
 	$( '#fn-checkTest' ).bind( 'testState', function(ev,res) {
     
-        console.log( res );
-		
-		same( res.running, true, 'test is running');
+        same( res.running, running, 'test is running');
 		same( res.testButton.text(), 'Test', 'test button');
 		
 		start();
@@ -246,10 +245,19 @@ test('Running test', function(){
 	
 	stopAllTests( function(){
 		startTests(tests[0], function() {
-			checkTest( '/' + tests[0], getURL(':8080/files/testProgress') );
+			checkTest( '/' + name, getURL(':8080/files/testProgress') );
 		});
 	});
-	
+
+}
+
+test('Running test', function(){
+	runningTest( tests[0], true );		
+});
+
+
+test('Not Running test', function(){	
+	runningTest( tests[1], false );	
 });
 
 
