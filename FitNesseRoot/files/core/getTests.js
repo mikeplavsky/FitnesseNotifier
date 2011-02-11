@@ -1,19 +1,14 @@
 ﻿function checkTest(pathname,url) {
 
-    $( '#fn-frame-test-state' ).remove();
-    $( 'body' ).append( $( '<iframe id="fn-frame-test-state" width=0 height=0><iframe>' ) );
-    
-    $( '#fn-frame-test-state' ).bind("load", function (res) {
-        
-        var path = pathname.replace( /^\//, '' );
+    $.get( url, function (res) {
+		
+		var path = pathname.replace( /^\//, '' );
 		var $testButton = $( 'a[href="' + path + '?test"]' );
         
-        var running = $( '#fn-frame-test-state' ).contents().find('a[href="' + path + '"]').length > 0;		
+        var running = res.match( RegExp( path, 'm' ) ) != null;		
 		$( '#fn-checkTest' ).trigger('testState', {running: running, testButton: $testButton } )
         
     });
-    
-    $( '#fn-frame-test-state' ).attr( "src", url );
 	
 }
 
